@@ -225,7 +225,7 @@ Secrets should never be committed to the repository.
 
 See:
 
-* [CONFIGURATION.md](CONFIGURATION.md)
+* [CONFIGURATION.md](config/CONFIGURATION.md)
 * [SECURITY.md](SECURITY.md)
 
 for details.
