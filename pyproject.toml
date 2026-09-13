@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "workload-profile-controller"
+version = "0.1.0"
+description = "Safe and configurable workload profile controller"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = [
+    "proxmox",
+    "virtualization",
+    "workload",
+    "profiles",
+    "infrastructure",
+    "automation",
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Systems Administration",
+    "Topic :: System :: Distributed Computing",
+]
+dependencies = [
+    "PyYAML>=6.0",
+    "python-dotenv>=1.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.12",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+wpc = "workload_profile_controller.cli:main"
+
+[project.urls]
+Repository = "https://github.com/lack0fcode/workload-profile-controller"
+Issues = "https://github.com/lack0fcode/workload-profile-controller/issues"

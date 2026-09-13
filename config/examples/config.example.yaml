@@ -1,0 +1,37 @@
+# Workload Profile Controller
+# Example configuration
+
+resources:
+  monitoring:
+    description: "Monitoring workload"
+
+  compute:
+    description: "Compute workload"
+
+  application:
+    description: "Application workload"
+
+profiles:
+  profile1:
+    description: "Normal operation"
+    running:
+      - monitoring
+      - application
+    stopped:
+      - compute
+
+  profile2:
+    description: "Compute workload"
+    running:
+      - compute
+    stopped:
+      - monitoring
+      - application
+
+  profile3:
+    description: "Maintenance"
+    running:
+      - monitoring
+    stopped:
+      - compute
+      - application

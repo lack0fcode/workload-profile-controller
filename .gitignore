@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python package metadata
+*.egg-info/
+
+# Environment / secrets
+.env
+*.key
+*.pem
+
+# Runtime state
+state.json
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+
+# Local configuration
+config.yaml
+
+# Build artifacts
+build/
+dist/
