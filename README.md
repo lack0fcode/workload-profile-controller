@@ -1,5 +1,7 @@
 # Workload Profile Controller
 
+[![CI](https://github.com/lack0fcode/workload-profile-controller/actions/workflows/ci.yml/badge.svg)](https://github.com/lack0fcode/workload-profile-controller/actions/workflows/ci.yml)
+
 A safe and configurable workload profile controller for orchestrating mutually exclusive resource states across infrastructure backends.
 
 The project was designed around a simple problem: different workloads may compete for the same infrastructure resources, making manual switching between operational configurations error-prone.
