@@ -181,7 +181,7 @@ That information remains inside the Proxmox backend.
 Clone the repository and create a virtual environment:
 
 ```bash
-git clone https://github.com/lac0fcode/workload-profile-controller.git
+git clone https://github.com/lack0fcode/workload-profile-controller.git
 cd workload-profile-controller
 
 python -m venv .venv
@@ -403,12 +403,12 @@ The Proxmox backend and core profile transition logic are functional and covered
 
 Current priorities include:
 
-* completing the public documentation;
 * strengthening configuration and safety validation;
 * improving the CLI;
 * expanding integration testing;
 * adding additional backend implementations;
-* developing a WebUI for profile management and operational visibility.
+* developing a WebUI for profile management and operational visibility;
+* establishing the packaging and release workflow.
 
 ---
 
@@ -439,30 +439,30 @@ Current priorities include:
 
 ### Documentation
 
-* [ ] Configuration guide
-* [ ] Architecture documentation
-* [ ] Security documentation
-* [ ] Contribution guide
+* [x] Configuration guide
+* [x] Architecture documentation
+* [x] Security documentation
+* [x] Contribution guide
 
 ### Future
 
 * [ ] WebUI
 * [ ] Additional infrastructure backends
 * [ ] Integration test environment
-* [ ] Dry-run/check command
 * [ ] Improved transition diagnostics
-* [ ] Packaging and release workflow
 
 ---
 
 ## License
 
-License information will be added before the first public release.
+This project is licensed under the MIT License.
+
+See [LICENSE](LICENSE) for the full license text.
 
 ---
 
 ## Contributing
 
-Contributions, bug reports and architectural discussions will be welcome once the contribution guidelines are published.
+Contributions, bug reports and architectural discussions are welcome.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
