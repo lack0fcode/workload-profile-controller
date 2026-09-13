@@ -181,7 +181,7 @@ That information remains inside the Proxmox backend.
 Clone the repository and create a virtual environment:
 
 ```bash
-git clone https://github.com/<your-account>/workload-profile-controller.git
+git clone https://github.com/lac0fcode/workload-profile-controller.git
 cd workload-profile-controller
 
 python -m venv .venv
