@@ -27,6 +27,7 @@ jobs:
         ports:
           - 4566:4566
         env:
+          LOCALSTACK_AUTH_TOKEN: ${{ secrets.LOCALSTACK_AUTH_TOKEN }}
           SERVICES: ec2
           AWS_DEFAULT_REGION: us-east-1
         options: >-
