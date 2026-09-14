@@ -21,6 +21,20 @@ jobs:
           - "3.13"
           - "3.14"
 
+    services:
+      localstack:
+        image: localstack/localstack:latest
+        ports:
+          - 4566:4566
+        env:
+          SERVICES: ec2
+          AWS_DEFAULT_REGION: us-east-1
+        options: >-
+          --health-cmd "curl -f http://localhost:4566/_localstack/health || exit 1"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,7 +48,72 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -e ".[dev]"
 
+      - name: Configure AWS credentials
+        run: |
+          mkdir -p ~/.aws
+
+          cat > ~/.aws/config <<'EOF'
+          [profile localstack]
+          region = us-east-1
+          EOF
+
+          cat > ~/.aws/credentials <<'EOF'
+          [localstack]
+          aws_access_key_id = test
+          aws_secret_access_key = test
+          EOF
+
+      - name: Provision LocalStack EC2 instances
+        env:
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          for i in {1..30}; do
+            if aws \
+              --endpoint-url=http://localhost.localstack.cloud:4566 \
+              ec2 describe-instances >/dev/null 2>&1; then
+              break
+            fi
+
+            sleep 2
+          done
+
+          AMI_ID=$(aws \
+            --endpoint-url=http://localhost.localstack.cloud:4566 \
+            ec2 describe-images \
+            --owners amazon \
+            --filters \
+              "Name=state,Values=available" \
+              "Name=architecture,Values=x86_64" \
+              "Name=virtualization-type,Values=hvm" \
+            --query 'sort_by(Images, &CreationDate)[-1].ImageId' \
+            --output text)
+
+          if [ "$AMI_ID" = "None" ] || [ -z "$AMI_ID" ]; then
+            echo "No suitable EC2 AMI available in LocalStack"
+            exit 1
+          fi
+
+          echo "Using LocalStack AMI: $AMI_ID"
+
+          for NAME in monitoring application gaming; do
+            echo "Creating EC2 instance: $NAME"
+
+            aws \
+              --endpoint-url=http://localhost.localstack.cloud:4566 \
+              ec2 run-instances \
+              --image-id "$AMI_ID" \
+              --instance-type t2.micro \
+              --tag-specifications \
+              "ResourceType=instance,Tags=[{Key=Name,Value=$NAME}]"
+          done
+
       - name: Run tests
+        env:
+          WPC_AWS_REGION: us-east-1
+          WPC_AWS_PROFILE: localstack
+          WPC_AWS_ENDPOINT_URL: http://localhost.localstack.cloud:4566
         run: pytest
 
       - name: Build package
