@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "workload-profile-controller"
-version = "0.1.0"
+version = "1.0.0"
 description = "Safe and configurable workload profile controller"
 readme = "README.md"
 requires-python = ">=3.11"
