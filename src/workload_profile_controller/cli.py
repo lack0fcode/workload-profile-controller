@@ -31,14 +31,19 @@ def create_parser() -> argparse.ArgumentParser:
         help="Show the current resource status.",
     )
 
+    subparsers.add_parser(
+        "reconcile",
+        help="Detect the current profile.",
+    )
+
     plan_parser = subparsers.add_parser(
-    "plan",
-    help="Plan a transition without changing resources.",
+        "plan",
+        help="Plan a transition without changing resources.",
     )
 
     plan_parser.add_argument(
-    "target_profile",
-    help="Target profile to plan.",
+        "target_profile",
+        help="Target profile to plan.",
     )
 
     transition_parser = subparsers.add_parser(
@@ -76,6 +81,16 @@ def main(argv=None) -> int:
             print(
                 f"{resource_id}\t{status.value}"
             )
+
+        return 0
+
+    if args.command == "reconcile":
+        controller = create_controller(args.config)
+        current_profile = controller.reconcile()
+
+        print(
+            f"Current profile: {current_profile}"
+        )
 
         return 0
 

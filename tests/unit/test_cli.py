@@ -144,3 +144,31 @@ def test_transition_command_rejects_unknown_profile(capsys):
     )
 
     controller.transition.assert_not_called()
+
+def test_reconcile_command(capsys):
+    controller = Mock()
+    controller.reconcile.return_value = "profile2"
+
+    with patch(
+        "workload_profile_controller.cli.create_controller",
+        return_value=controller,
+    ) as create_controller:
+        exit_code = main([
+            "--config",
+            "config/examples/config.example.yaml",
+            "reconcile",
+        ])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+
+    assert captured.out == (
+        "Current profile: profile2\n"
+    )
+
+    create_controller.assert_called_once_with(
+        "config/examples/config.example.yaml"
+    )
+
+    controller.reconcile.assert_called_once_with()

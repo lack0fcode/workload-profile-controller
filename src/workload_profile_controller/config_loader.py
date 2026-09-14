@@ -33,6 +33,7 @@ def load_config(path: str | Path) -> Config:
     config = Config(
         resources=resources,
         profiles=profiles,
+        backend=data.get("backend", "proxmox"),
     )
 
     validate_config(config)

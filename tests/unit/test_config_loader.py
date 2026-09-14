@@ -4,11 +4,11 @@ import pytest
 
 from workload_profile_controller.config_loader import load_config
 
+
 CONFIG_PATH = (
-    Path(__file__).parent.parent.parent
-    / "config"
-    / "examples"
-    / "config.example.yaml"
+    Path(__file__).parent.parent
+    / "fixtures"
+    / "config.yaml"
 )
 
 
@@ -90,3 +90,32 @@ profiles:
 
     with pytest.raises(ValueError):
         load_config(config_path)
+
+def test_load_config_defaults_to_proxmox_backend():
+    config = load_config(CONFIG_PATH)
+
+    assert config.backend == "proxmox"
+
+
+def test_load_config_accepts_aws_backend(tmp_path):
+    config_data = """
+backend: aws
+
+resources:
+  monitoring:
+    description: "Monitoring workload"
+
+profiles:
+  profile1:
+    description: "Normal operation"
+    running:
+      - monitoring
+    stopped: []
+"""
+
+    config_path = tmp_path / "aws.yaml"
+    config_path.write_text(config_data, encoding="utf-8")
+
+    config = load_config(config_path)
+
+    assert config.backend == "aws"

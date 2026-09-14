@@ -1,7 +1,12 @@
 from .config import Config
 
-
 def validate_config(config: Config) -> None:
+    # R-11 — Supported backend
+    if config.backend not in {"proxmox", "aws"}:
+        raise ValueError(
+            f"Unsupported backend: {config.backend}"
+        )
+
     # R-01 — At least one resource
     if not config.resources:
         raise ValueError("At least one resource is required")

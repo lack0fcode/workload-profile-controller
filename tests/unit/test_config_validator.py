@@ -289,6 +289,43 @@ def test_profile_cannot_be_empty():
     with pytest.raises(ValueError):
         validate_config(config)
 
+# ---------------------------------------------------------------------------
+# R-11 — Backend
+# ---------------------------------------------------------------------------
+
+
+def test_proxmox_backend_is_valid():
+    config = make_valid_config()
+
+    validate_config(config)
+
+
+def test_aws_backend_is_valid():
+    config = make_valid_config()
+
+    config = Config(
+        resources=config.resources,
+        profiles=config.profiles,
+        backend="aws",
+    )
+
+    validate_config(config)
+
+
+def test_unsupported_backend_is_rejected():
+    config = make_valid_config()
+
+    config = Config(
+        resources=config.resources,
+        profiles=config.profiles,
+        backend="invalid",
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="Unsupported backend: invalid",
+    ):
+        validate_config(config)
 
 # ---------------------------------------------------------------------------
 # Valid configuration

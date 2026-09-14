@@ -33,7 +33,7 @@ coverage.xml
 .vscode/
 
 # Local configuration
-config.yaml
+/config.yaml
 
 # Build artifacts
 build/

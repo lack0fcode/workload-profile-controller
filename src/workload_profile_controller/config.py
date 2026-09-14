@@ -19,3 +19,4 @@ class ProfileConfig:
 class Config:
     resources: dict[str, ResourceConfig]
     profiles: dict[str, ProfileConfig]
+    backend: str = "proxmox"

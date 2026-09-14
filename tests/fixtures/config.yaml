@@ -1,10 +1,8 @@
-backend: aws
-
 resources:
   monitoring:
     description: "Monitoring workload"
 
-  gaming:
+  compute:
     description: "Compute workload"
 
   application:
@@ -17,12 +15,12 @@ profiles:
       - monitoring
       - application
     stopped:
-      - gaming
+      - compute
 
   profile2:
     description: "Compute workload"
     running:
-      - gaming
+      - compute
     stopped:
       - monitoring
       - application
@@ -32,5 +30,5 @@ profiles:
     running:
       - monitoring
     stopped:
-      - gaming
+      - compute
       - application

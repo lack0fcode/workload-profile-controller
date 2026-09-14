@@ -123,3 +123,25 @@ def test_config_is_immutable():
 
     with pytest.raises(FrozenInstanceError):
         config.resources = {}
+
+def test_config_defaults_to_proxmox_backend():
+    config = make_config()
+
+    assert config.backend == "proxmox"
+
+
+def test_config_accepts_aws_backend():
+    config = Config(
+        resources={},
+        profiles={},
+        backend="aws",
+    )
+
+    assert config.backend == "aws"
+
+
+def test_config_backend_is_immutable():
+    config = make_config()
+
+    with pytest.raises(FrozenInstanceError):
+        config.backend = "aws"
