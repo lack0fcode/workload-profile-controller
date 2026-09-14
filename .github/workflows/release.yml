@@ -5,6 +5,13 @@ on:
     types:
       - published
 
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Git tag to publish"
+        required: true
+        type: string
+
 permissions:
   contents: read
 
@@ -15,7 +22,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.inputs.tag || github.event.release.tag_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v6
