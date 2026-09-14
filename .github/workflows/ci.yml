@@ -31,6 +31,7 @@ jobs:
           SERVICES: ec2
           AWS_DEFAULT_REGION: us-east-1
         options: >-
+          --volume /var/run/docker.sock:/var/run/docker.sock
           --health-cmd "curl -f http://localhost:4566/_localstack/health || exit 1"
           --health-interval 5s
           --health-timeout 5s
